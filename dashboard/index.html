@@ -2,13 +2,131 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Token Radar: pre-token protocols ranked by implied value</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tide Table — Token Radar</title>
+<meta name="description" content="A fitted survey of protocols that record no token in DefiLlama, ranked by implied value with costed farm plans.">
 <link rel="stylesheet" href="app.css">
 </head>
 <body>
-<a class="skip" href="#board">Skip to the board</a>
-<main id="board" tabindex="-1" aria-busy="true"></main>
+<div id="app">
+  <aside class="spine" aria-hidden="true">
+    <div class="spine-mark">TT</div>
+    <div class="spine-name">TIDE TABLE</div>
+    <div class="spine-sub">SURVEY NO. 01</div>
+    <div class="spine-rule"></div>
+    <div class="spine-depth" id="spine-depth"></div>
+    <div class="spine-foot">DEPTH<br>IS THE<br>SIGNAL</div>
+  </aside>
+  <main class="sheet" id="sheet">
+    <header class="masthead">
+      <div class="mast-left">
+        <div class="eyebrow">THE PRE-TOKEN FIELD &nbsp;/&nbsp; A FITTED SURVEY</div>
+        <h1>Token Radar</h1>
+        <p class="deck">What a protocol's own numbers would be worth if it issued a token today — and what it costs to farm before that day. An entry's claim, not a forecast and not a price.</p>
+      </div>
+      <div class="mast-right">
+        <div class="stamp" id="stamp">SNAPSHOT</div>
+        <div class="stamp-sub" id="stamp-sub">SEALED INPUT</div>
+        <div class="stamp-rule"></div>
+        <div class="stamp-note">Read the soundings left to right.<br>Every figure comes from one snapshot.</div>
+      </div>
+    </header>
+
+    <section class="kpis" id="kpis" aria-label="Survey summary"></section>
+
+    <section class="method" id="method"></section>
+
+    <section class="board" id="board-section">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">01 / THE SOUNDINGS</div>
+          <h2>Ranked board</h2>
+        </div>
+        <div class="section-meta" id="section-meta"></div>
+      </div>
+      <div class="toolbar" id="toolbar">
+        <label class="field search-field">
+          <span>FIND</span>
+          <input type="search" id="q" placeholder="name or slug" autocomplete="off">
+        </label>
+        <label class="field">
+          <span>CATEGORY</span>
+          <select id="category"></select>
+        </label>
+        <label class="field">
+          <span>ORDER BY</span>
+          <select id="sort">
+            <option value="rank">Model rank</option>
+            <option value="implied">Implied value</option>
+            <option value="tvl">TVL</option>
+            <option value="netApr">Net APR after costs</option>
+            <option value="multiple">Value / TVL multiple</option>
+            <option value="change">Seven-day change</option>
+            <option value="age">Listing age</option>
+          </select>
+        </label>
+        <label class="field narrow">
+          <span>DIRECTION</span>
+          <select id="dir">
+            <option value="desc">Descending</option>
+            <option value="asc">Ascending</option>
+          </select>
+        </label>
+        <div class="toggles">
+          <label class="toggle"><input type="checkbox" id="eligible" checked><span>Eligible only</span></label>
+          <label class="toggle"><input type="checkbox" id="watch"><span>Watchlist only</span></label>
+          <label class="toggle"><input type="checkbox" id="positive"><span>Positive net APR</span></label>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="board-table" id="board-table">
+          <thead><tr>
+            <th class="col-rank">#</th>
+            <th class="col-name">PROTOCOL</th>
+            <th class="col-cat">CATEGORY</th>
+            <th class="num">TVL</th>
+            <th class="num">7D</th>
+            <th class="num">IMPLIED VALUE</th>
+            <th class="num">80% BAND</th>
+            <th class="num">× TVL</th>
+            <th class="num">NET APR</th>
+            <th class="col-farm">FARM PLAN</th>
+          </tr></thead>
+          <tbody id="board-body"></tbody>
+        </table>
+      </div>
+      <div class="table-foot" id="table-foot"></div>
+    </section>
+
+    <section class="detail" id="detail" hidden></section>
+
+    <section class="live" id="live-section">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">02 / THE CONTROL SET</div>
+          <h2>Protocols that already record a token</h2>
+        </div>
+        <div class="section-meta">Used to fit the model; never ranked as pre-token launches.</div>
+      </div>
+      <div class="table-wrap live-wrap">
+        <table class="board-table live-table" id="live-table">
+          <thead><tr><th class="col-rank">#</th><th class="col-name">PROTOCOL</th><th class="col-cat">CATEGORY</th><th class="num">TVL</th><th class="num">MARKET CAP</th><th class="num">CAP / TVL</th><th class="num">7D</th></tr></thead>
+          <tbody id="live-body"></tbody>
+        </table>
+      </div>
+      <div class="live-foot" id="live-foot"></div>
+    </section>
+
+    <footer class="colophon">
+      <div class="colophon-rule"></div>
+      <div class="colophon-grid">
+        <p><strong>Reading the claim.</strong> A protocol in this board records no token in DefiLlama. That is a statement about the record, not proof that no token exists. Implied value is this entry's own fitted estimate under a frozen snapshot; it is not make.fun's view, a price target, or a prediction of a launch.</p>
+        <p><strong>Reading the plan.</strong> Gross yield is a category starting estimate, not an offer. Net APR subtracts a reserve for impermanent loss and an explicit per-chain gas budget; the separate cash line is a benchmark. Steps are illustrative and carry their own cost and time. Verify every figure on the protocol's own site before committing capital.</p>
+        <p><strong>Source.</strong> <span id="source-line">DefiLlama</span> · fetched <span id="asof-line">—</span> · <span id="count-line">—</span>. All figures are derived from that one snapshot at build time; the page makes no network request.</p>
+      </div>
+    </footer>
+  </main>
+</div>
 <script src="../data.js"></script>
 <script src="app.js"></script>
 </body>
